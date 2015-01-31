@@ -10,7 +10,7 @@ var candidateSchema = new mongoose.Schema({
 });
 
 candidateSchema.methods.upvote = function(done) {
-  this.votes.push(1);
+  this.votes.push(Date());
   this.save(function(err) {
   	done(err);
   });

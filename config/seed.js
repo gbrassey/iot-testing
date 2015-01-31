@@ -5,10 +5,10 @@ var Candidate = require('../models/candidate');
 Candidate.find({}).remove(function() {
 	Candidate.create({
 		name: 'test',
-		votes: [1,1,1,1,1]
+		votes: [Date(),Date(),Date(),Date(),Date()]
 	}, {
 		name: 'george',
-		votes: [1,1,1,1,1,1,1,1]
+		votes: [Date(),Date(),Date(),Date(),Date(),Date(),Date(),Date()]
 	}, function() {
 			console.log('finished populating candidates');
 		}
