@@ -3,4 +3,3 @@ node_modules
 npm-debug.log
 !*/.gitkeep
 config/private.js
-config/secrets.js
