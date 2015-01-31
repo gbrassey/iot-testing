@@ -42,7 +42,7 @@ router.get('/votes/:candidate', function(req, res) {
 			if (!candidate) {
 				return res.status(404).json({msg: candidateName + ' not found'});
 			} else {
-				return res.status(200).json({msg: candidate.name +' has ' + candidate.votes.length + ' votes!'});
+				return res.status(200).json(candidate);
 			}
 
 		}
