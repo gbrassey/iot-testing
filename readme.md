@@ -3,10 +3,12 @@
 ## HTTP
 
 ### POST /http/votes/{candidate}
-- increases the votes of the candidate or creates if one does not exist already
+- Creates a candidate if one does not exist already by that name
+- Increases the vote by one
+- Responds w/ JSON of the candidate and their votes
 
 ### GET /http/votes/{candidate}
-- returns a count of the number of votes
+- Responds w/ JSON of the candidate and their votes
 
 ### DELETE /http/votes/{candidate}
-- deletes the candidate and removes them from the DB
+- Deletes the candidate from the DB
