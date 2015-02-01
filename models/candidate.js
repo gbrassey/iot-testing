@@ -3,17 +3,22 @@
 var mongoose = require('mongoose');
 
 var candidateSchema = new mongoose.Schema({
-  name: { type: String, unique: true, lowercase: true, required: true },
-  votes: [{ type: Date, default: Date.now }],
+	name: { type: String, unique: true, lowercase: true, required: true },
+	votes: [
+		{
+			name: String,
+			date: { type: Date, default: Date.now }
+		}
+	],
 
-  dateAdded: { type: Date, default: Date.now }
+	dateAdded: { type: Date, default: Date.now }
 });
 
-candidateSchema.methods.upvote = function(done) {
-  this.votes.push(Date());
-  this.save(function(err) {
-  	done(err);
-  });
+candidateSchema.methods.upvote = function(voterName, done) {
+	this.votes.push({name: voterName || ''});
+	this.save(function(err) {
+		done(err);
+	});
 };
 
 candidateSchema.virtual('getVotes').get(function() {

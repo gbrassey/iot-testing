@@ -7,19 +7,20 @@ var Candidate = require('../models/candidate');
 router.post('/votes/:candidate', function(req, res) {
 
 	var candidateName = req.params.candidate;
+	var voterName = req.body.voterName;
 
-	Candidate.findOne({ 'name': candidateName},
+	Candidate.findOne({ name: candidateName},
 		function(err, candidate) {
 			if (err) return res.status(400).json({err: err});
 
 			if (candidate) {
-				candidate.upvote(function() {
+				candidate.upvote(voterName, function() {
 					res.status(200).json(candidate);
 				});
 			} else {
 				candidate = new Candidate({
 					name: candidateName,
-					votes: 1
+					votes: [{ name: voterName }]
 				});
 				candidate.save(function(err) {
 					if (err) return res.status(400).json({err: err});
@@ -35,7 +36,7 @@ router.get('/votes/:candidate', function(req, res) {
 
 	var candidateName = req.params.candidate;
 
-	Candidate.findOne({ 'name': candidateName },
+	Candidate.findOne({ name: candidateName },
 		function(err, candidate) {
 			if (err) return res.status(400).json({err: err});
 
@@ -53,7 +54,7 @@ router.delete('/votes/:candidate', function(req, res) {
 
 	var candidateName = req.params.candidate;
 
-	Candidate.remove({ 'name': candidateName },
+	Candidate.remove({ name: candidateName },
 		function(err) {
 			if (err) return res.status(400).json({err: err});
 			return res.status(200).json({msg: candidateName + ' has been deleted'});
