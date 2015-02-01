@@ -7,11 +7,11 @@ var config = {
 		mongodb: 'mongodb://localhost/test'
 	},
 	development: {
-		mongodb: 'mongodb://localhost/novalia-testing-dev',
+		mongodb: 'mongodb://localhost/iot-testing-dev',
 		seedDB: true
 	},
 	production: {
-		mongodb: process.env.MONGOLAB_URI || 'mongodb://localhost/novalia-testing',
+		mongodb: process.env.MONGOLAB_URI || 'mongodb://localhost/iot-testing',
 		secrets: require('./secrets')
 	}
 };

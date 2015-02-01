@@ -1,4 +1,4 @@
-# Novalia Test Server
+# IOT Test Server
 
 ## HTTP
 
