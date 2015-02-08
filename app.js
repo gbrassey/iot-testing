@@ -45,9 +45,8 @@ app.use(function(req, res, next) {
 // error handlers
 app.use(function(err, req, res) {
     res.status(err.status || 500);
-    var message = err.message;
     res.render('error', {
-        message: message,
+        message: err.message,
         error: (process.env.NODE_ENV === 'development') ? err : {}
     });
 });
