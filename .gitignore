@@ -6,3 +6,6 @@ config/private.js
 .sass-cache
 bower_components
 public/stylesheets/*.css
+/views
+public/stylesheets
+public/javascripts

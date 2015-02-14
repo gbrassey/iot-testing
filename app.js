@@ -31,6 +31,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+if (process.env.NODE_ENV === 'development') {
+	app.use('/bower_components',  express.static(path.join(__dirname + '/bower_components')));
+	app.use('/src/javascripts', express.static(path.join(__dirname + '/src/javascripts')));
+}
 
 app.use('/', routes);
 app.use('/http', httpRoute);

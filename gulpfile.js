@@ -1,26 +1,32 @@
+'use strict';
+
 var gulp = require('gulp'),
-	sass = require('gulp-ruby-sass');
+	sass = require('gulp-ruby-sass'),
+	usemin = require('gulp-usemin'),
+	del = require('del');
 
 var config = {
-	bowerDir: './bower_components',
-	sassDir: './resources/sass',
+	bowerRes: './bower_components',
+	sassRes: './src/sass',
 	cssDir: './public/stylesheets',
+	jsRes: './src/javascripts',
 	jsDir: './public/javascripts',
-	production: true
-
+	viewRes: './src/views',
+	viewDir: './views',
+	env: process.env.NODE_ENV || 'development'
 };
 
-gulp.task('css', function() { 
-    return sass(config.sassDir + '/style.scss', {
+gulp.task('styles', function() { 
+    return sass(config.sassRes + '/style.scss', {
 			style: (function() {
-				if (config.production)
+				if (config.env === 'production')
 					return 'compressed';
 				else
 					return 'expanded';
 			})(),
 			loadPath: [
-				'./resources/sass',
-				config.bowerDir + '/bootstrap-sass-official/assets/stylesheets'
+				'./src/sass',
+				config.bowerRes + '/bootstrap-sass-official/assets/stylesheets'
 			]
 		}) 
 		.on('error', function (err) {
@@ -29,11 +35,32 @@ gulp.task('css', function() { 
 		.pipe(gulp.dest(config.cssDir)); 
 });
 
-gulp.task('set-dev', function() {config.production = false});
- gulp.task('watch-sass', function() {
-     gulp.watch(config.sassDir + '/**/*.scss', ['css']); 
+gulp.task('usemin', function () {
+	if (config.env === 'production') {
+		gulp.src(config.viewRes + '/**/*.ejs')
+			.pipe(usemin({
+				assetsDir: '.'
+			}))
+			.pipe(gulp.dest(config.viewDir));
+		gulp.src('./views/javascripts/*')
+			.pipe(gulp.dest('./public/javascripts'));
+		del(['./views/javascripts']);
+	} else {
+		gulp.src(config.viewRes + '/**/*.ejs')
+			.pipe(gulp.dest(config.viewDir));
+	}
 });
 
-  gulp.task('default', ['css']);
-gulp.task('dev', ['set-dev', 'css']);
-gulp.task('watch', ['dev', 'watch-sass']);
+ gulp.task('watch-resources', function() {
+	var watchFiles = [
+		config.sassRes + '/**/*.scss',
+		config.viewRes + '/**/*.ejs',
+		config.bowerRes,
+		config.jsRes
+	];
+     gulp.watch(watchFiles, ['build']); 
+});
+
+gulp.task('build', ['styles', 'usemin']);
+  gulp.task('default', ['build']);
+gulp.task('watch', ['build', 'watch-resources']);
