@@ -3,21 +3,22 @@
 var gulp = require('gulp'),
 	sass = require('gulp-ruby-sass'),
 	usemin = require('gulp-usemin'),
-	del = require('del');
+	uglify = require('gulp-uglify'),
+	gulpFilter = require('gulp-filter');
 
 var config = {
-	bowerRes: './bower_components',
-	sassRes: './src/sass',
+	bowerSrc: './bower_components',
+	sassSrc: './src/sass',
 	cssDir: './public/stylesheets',
-	jsRes: './src/javascripts',
+	jsSrc: './src/javascripts',
 	jsDir: './public/javascripts',
-	viewRes: './src/views',
+	viewSrc: './src/views',
 	viewDir: './views',
 	env: process.env.NODE_ENV || 'development'
 };
 
 gulp.task('styles', function() { 
-    return sass(config.sassRes + '/style.scss', {
+    return sass(config.sassSrc + '/style.scss', {
 			style: (function() {
 				if (config.env === 'production')
 					return 'compressed';
@@ -26,41 +27,45 @@ gulp.task('styles', function() { 
 			})(),
 			loadPath: [
 				'./src/sass',
-				config.bowerRes + '/bootstrap-sass-official/assets/stylesheets'
+				config.bowerSrc + '/bootstrap-sass-official/assets/stylesheets'
 			]
 		}) 
 		.on('error', function (err) {
 			console.error('Error!', err.message);
 		})
-		.pipe(gulp.dest(config.cssDir)); 
+		.pipe(gulp.dest(config.cssDir));
 });
 
-gulp.task('usemin', function () {
+gulp.task('scripts', function() {
 	if (config.env === 'production') {
-		gulp.src(config.viewRes + '/**/*.ejs')
+		var vwFilter = gulpFilter(['**/*.ejs']);
+
+		gulp.src(config.viewSrc + '/**/*.ejs')
 			.pipe(usemin({
+				js: [uglify(), gulp.dest('./public')],
 				assetsDir: '.'
 			}))
-			.pipe(gulp.dest(config.viewDir));
-		gulp.src('./views/javascripts/*')
-			.pipe(gulp.dest('./public/javascripts'));
-		del(['./views/javascripts']);
+			.pipe(vwFilter)
+			.pipe(gulp.dest(config.viewDir))
+			.pipe(vwFilter.restore());
+
 	} else {
-		gulp.src(config.viewRes + '/**/*.ejs')
+		gulp.src(config.viewSrc + '/**/*.ejs')
 			.pipe(gulp.dest(config.viewDir));
 	}
 });
 
- gulp.task('watch-resources', function() {
+
+gulp.task('watch-resources', function() {
 	var watchFiles = [
-		config.sassRes + '/**/*.scss',
-		config.viewRes + '/**/*.ejs',
-		config.bowerRes,
-		config.jsRes
+		config.sassSrc + '/**/*.scss',
+		config.viewSrc + '/**/*.ejs',
+		config.bowerSrc + '/**/*',
+		config.jsSrc + '/**/*.js'
 	];
      gulp.watch(watchFiles, ['build']); 
 });
 
-gulp.task('build', ['styles', 'usemin']);
+gulp.task('build', ['styles', 'scripts']);
   gulp.task('default', ['build']);
-gulp.task('watch', ['build', 'watch-resources']);
+gulp.task('watch', ['default', 'watch-resources']);
