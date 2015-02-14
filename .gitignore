@@ -3,3 +3,6 @@ node_modules
 npm-debug.log
 !*/.gitkeep
 config/private.js
+.sass-cache
+bower_components
+public/stylesheets/*.css
