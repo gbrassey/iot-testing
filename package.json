@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "supervise": "node-supervisor ./bin/www",
     "test": "mocha",
-    "postinstall": "bundle install && bower install && gulp"
+    "postinstall": "bower install && gulp"
   },
   "dependencies": {
     "autoprefixer": "^5.1.0",
