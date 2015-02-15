@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "supervise": "node-supervisor ./bin/www",
     "test": "mocha",
-    "postinstall": "bower install && gulp"
+    "postinstall": "bundle install && bower install && gulp"
   },
   "dependencies": {
     "body-parser": "~1.8.1",
