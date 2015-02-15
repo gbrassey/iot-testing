@@ -7,7 +7,7 @@ var Candidate = require('../models/candidate');
 /* GET home page. */
 router.get('/', function(req, res) {
 	Candidate.find({}, function(err, candidates) {
-		res.render('index', { title: 'IOT Test Server', candidates: candidates });
+		res.render('index', { title: process.env.WEB_TITLE || 'IOT Test Server', candidates: candidates });
 	});
 });
 
