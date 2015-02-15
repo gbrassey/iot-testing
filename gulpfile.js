@@ -1,7 +1,7 @@
 'use strict';
 
 var gulp = require('gulp'),
-	sass = require('gulp-ruby-sass'),
+	sass = require('gulp-sass'),
 	usemin = require('gulp-usemin'),
 	uglify = require('gulp-uglify'),
 	gulpFilter = require('gulp-filter');
@@ -18,21 +18,19 @@ var config = {
 };
 
 gulp.task('styles', function() { 
-    return sass(config.sassSrc + '/style.scss', {
-			style: (function() {
+	return gulp.src(config.sassSrc + '/style.scss')
+		.pipe(sass({
+			outputStyle: (function() {
 				if (config.env === 'production')
 					return 'compressed';
 				else
 					return 'expanded';
 			})(),
-			loadPath: [
+			includePaths: [
 				'./src/sass',
 				config.bowerSrc + '/bootstrap-sass-official/assets/stylesheets'
 			]
-		}) 
-		.on('error', function (err) {
-			console.error('Error!', err.message);
-		})
+		}) )
 		.pipe(gulp.dest(config.cssDir));
 });
 
