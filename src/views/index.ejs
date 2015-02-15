@@ -12,19 +12,24 @@
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
 		<div class="container">
-		    <div class="wrapper">
-		        <h1 class="title"><%= title %></h1>
+			<nav class="navbar navbar-default">
+			  <div class="container-fluid">
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="/"><%= title %></a>
+			    </div>
+			  </div>
+			</nav>
+			<div class="row">
+			  <div class="col-md-12">
 		        <ul>
-					<% candidates.forEach(function(candidate) { %>
-		                <li><%= candidate.name %>: <%= candidate.votes.length %> votes</li>
-		            <% }); %>
+<% candidates.forEach(function(candidate) { %>
+	                <li><a href="/http/votes/<%= candidate.name %>"><%= candidate.name %></a>: <%= candidate.votes.length %> votes</li>
+<% }); %>
 		        </ul>
+		      </div>
 		    </div>
 		</div>
 		<!-- build:js /javascripts/script.js -->
-		<script src='/bower_components/jquery/dist/jquery.js'></script>
-		<script src="/src/javascripts/script.js"></script>
-		<script src="/src/javascripts/script2.js"></script>
 		<!-- endbuild -->
 	</body>
 </html>

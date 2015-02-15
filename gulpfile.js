@@ -4,6 +4,7 @@ var gulp = require('gulp'),
 	sass = require('gulp-sass'),
 	usemin = require('gulp-usemin'),
 	uglify = require('gulp-uglify'),
+	autoprefixer = require('autoprefixer'),
 	gulpFilter = require('gulp-filter');
 
 var config = {
@@ -40,7 +41,7 @@ gulp.task('scripts', function() {
 
 		gulp.src(config.viewSrc + '/**/*.ejs')
 			.pipe(usemin({
-				js: [uglify(), gulp.dest('./public')],
+				js: [uglify(), autoprefixer(), gulp.dest('./public')],
 				assetsDir: '.'
 			}))
 			.pipe(vwFilter)
