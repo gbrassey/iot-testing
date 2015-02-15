@@ -4,6 +4,26 @@ var express = require('express');
 var router = express.Router();
 var Candidate = require('../models/candidate');
 
+router.get('/votes', function(req, res) {
+	Candidate.find({},
+		function(err, candidates) {
+			if (err) return res.status(400).send(err.toString());
+
+			if (!candidates) {
+				return res.status(404).send('No candidates found');
+			} else {
+				var json = candidates.map(function(candidate) {
+					var obj = {};
+					obj[candidate.name] = candidate.getVotes
+					return obj;
+				});
+				return res.status(200).json(json);
+			}
+
+		}
+	);
+});
+
 router.post('/votes/:candidate', function(req, res) {
 
 	var candidateName = req.params.candidate;

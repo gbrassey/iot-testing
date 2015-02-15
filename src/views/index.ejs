@@ -23,7 +23,7 @@
 			  <div class="col-md-12">
 		        <ul>
 <% candidates.forEach(function(candidate) { %>
-	                <li><a href="/http/votes/<%= candidate.name %>"><%= candidate.name %></a>: <%= candidate.votes.length %> votes</li>
+	                <li id="<%= candidate.name %>"><a href="/http/votes/<%= candidate.name %>"><%= candidate.name %></a>: <span class="count"><%= candidate.votes.length %></span> votes</li>
 <% }); %>
 		        </ul>
 		      </div>
