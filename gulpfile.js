@@ -2,9 +2,8 @@
 
 var gulp = require('gulp'),
 	sass = require('gulp-sass'),
-	usemin = require('gulp-usemin'),
-	uglify = require('gulp-uglify'),
-	gulpFilter = require('gulp-filter');
+	browserify = require('browserify'),
+	source = require('vinyl-source-stream');
 
 var config = {
 	bowerSrc: './bower_components',
@@ -36,20 +35,12 @@ gulp.task('styles', function() { 
 
 gulp.task('scripts', function() {
 	if (config.env === 'production') {
-		var vwFilter = gulpFilter(['**/*.ejs']);
-
-		gulp.src(config.viewSrc + '/**/*.ejs')
-			.pipe(usemin({
-				js: [uglify(), gulp.dest('./public')],
-				assetsDir: '.'
-			}))
-			.pipe(vwFilter)
-			.pipe(gulp.dest(config.viewDir))
-			.pipe(vwFilter.restore());
 
 	} else {
-		gulp.src(config.viewSrc + '/**/*.ejs')
-			.pipe(gulp.dest(config.viewDir));
+		return browserify(config.jsSrc + '/script.js')
+			.bundle()
+			.pipe(source('bundle.js'))
+			.pipe(gulp.dest(config.jsDir));
 	}
 });
 
@@ -64,6 +55,6 @@ gulp.task('watch-resources', function() {
      gulp.watch(watchFiles, ['build']); 
 });
 
-gulp.task('build', ['styles', 'scripts']);
+gulp.task('build', ['scripts', 'styles']);
   gulp.task('default', ['build']);
 gulp.task('watch', ['default', 'watch-resources']);

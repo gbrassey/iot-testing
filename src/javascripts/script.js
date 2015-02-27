@@ -1,1 +1,7 @@
-console.log('script 1 loaded');
+'use strict';
+
+var $ = require('jquery');
+
+$(document).ready(function() {
+	console.log('loaded');
+});
