@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var Candidate = require('../models/candidate');
+var bus = require('../lib/bus');
 
 router.get('/votes', function(req, res) {
 	Candidate.find({},
@@ -35,6 +36,7 @@ router.post('/votes/:candidate', function(req, res) {
 
 			if (candidate) {
 				candidate.upvote(voterName, function() {
+					bus.vote();
 					res.status(200).send(candidate.getVotes.toString());
 				});
 			} else {
