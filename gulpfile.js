@@ -6,7 +6,7 @@ var gulp = require('gulp'),
 	source = require('vinyl-source-stream'),
 	uglify = require('gulp-uglify'),
 	gulpif = require('gulp-if'),
-	buffer = require('vinyl-buffer');;
+	buffer = require('vinyl-buffer');
 
 var config = {
 	npmSrc: './node_modules',
@@ -17,7 +17,7 @@ var config = {
 	env: process.env.NODE_ENV || 'development'
 };
 
-gulp.task('styles', function() { 
+gulp.task('styles', function() {
 	var isProd = config.env === 'production';
 	var sassConfig = {
 		outputStyle: (isProd) ? 'compressed' : 'expanded',
@@ -48,7 +48,6 @@ gulp.task('scripts', function() {
 gulp.task('watch-resources', function() {
 	var watchFiles = [
 		config.sassSrc + '/**/*.scss',
-		config.npmSrc + '/**/*',
 		config.jsSrc + '/**/*.js'
 	];
      gulp.watch(watchFiles, ['build']); 

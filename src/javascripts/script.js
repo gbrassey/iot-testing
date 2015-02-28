@@ -7,7 +7,9 @@ var updateList = require('./lib/updateList');
 
 $(document).ready(function() {
 
-	socket.on('vote', function(){
+	socket.on('vote', function(name){
+
+		console.log('vote for ' + name);
 
 		updateList(function() {
 

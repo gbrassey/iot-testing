@@ -4,7 +4,7 @@ var $ = require('jquery');
 var getVotes = require('../lib/getVotes');
 var buildList = require('../lib/buildList');
 
-function update (callback) {
+function updateList (callback) {
 	getVotes(function(candidates) {
 		var list = buildList(candidates);
 
@@ -14,4 +14,4 @@ function update (callback) {
 	});
 }
 
-module.exports = update;
+module.exports = updateList;
