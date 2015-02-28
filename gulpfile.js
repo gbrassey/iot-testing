@@ -20,14 +20,15 @@ var config = {
 };
 
 gulp.task('styles', function() { 
+	var isProd = config.env === 'production';
+	var sassConfig = {
+		outputStyle: (isProd) ? 'compressed' : 'expanded',
+		sourceComments: (isProd) ? false : true
+	};
 	return gulp.src(config.sassSrc + '/style.scss')
 		.pipe(sass({
-			outputStyle: (function() {
-				if (config.env === 'production')
-					return 'compressed';
-				else
-					return 'expanded';
-			})(),
+			outputStyle: sassConfig.outputStyle,
+			sourceComments: sassConfig.sourceComments,
 			includePaths: [
 				'./src/sass',
 				config.npmSrc + '/bootstrap-sass/assets/stylesheets'
