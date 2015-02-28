@@ -16,7 +16,8 @@ describe('Candidate Model', function() {
 
 	it('should create a new candidate', function(done) {
 		var candidate = new Candidate({
-			name: 'test'
+			name: 'test',
+			votes: [{by: 'tester'}]
 		});
 		candidate.save(function(err) {
 			done(err);
@@ -43,14 +44,14 @@ describe('Candidate Model', function() {
 	it('should increase the vote count by one', function(done) {
 		Candidate.findOne({ name: 'test' }, function(err, candidate) {
 			if (err) return done(err);
-			candidate.votes.should.be.empty;
+			candidate.getVotes.should.equal(1);
 			candidate.upvote('test', function(err) {
-				candidate.votes.should.have.lengthOf(1);
-				candidate.getVotes.should.equal(1);
+				candidate.votes.should.have.lengthOf(2);
+				candidate.getVotes.should.equal(2);
 				done(err);
-			})
-		})
-	})
+			});
+		});
+	});
 
 	it('should delete a candidate', function(done) {
 		Candidate.remove({ name: 'test' }, function(err) {
