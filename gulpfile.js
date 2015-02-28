@@ -3,7 +3,10 @@
 var gulp = require('gulp'),
 	sass = require('gulp-sass'),
 	browserify = require('browserify'),
-	source = require('vinyl-source-stream');
+	source = require('vinyl-source-stream'),
+	uglify = require('gulp-uglify'),
+	gulpif = require('gulp-if'),
+	buffer = require('vinyl-buffer');;
 
 var config = {
 	bowerSrc: './bower_components',
@@ -34,14 +37,12 @@ gulp.task('styles', function() { 
 });
 
 gulp.task('scripts', function() {
-	if (config.env === 'production') {
-
-	} else {
-		return browserify(config.jsSrc + '/script.js')
-			.bundle()
-			.pipe(source('bundle.js'))
-			.pipe(gulp.dest(config.jsDir));
-	}
+	return browserify(config.jsSrc + '/script.js')
+		.bundle()
+		.pipe(source('bundle.js'))
+		.pipe(buffer())
+		.pipe(gulpif(config.env === 'production', uglify()))
+		.pipe(gulp.dest(config.jsDir));
 });
 
 
