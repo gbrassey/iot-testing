@@ -1,8 +1,20 @@
 'use strict';
 
 var $ = require('jquery');
-require('./lib/socket');
+var socket = require('./lib/socket');
+var alert = require('./lib/alert');
+var updateList = require('./lib/updateList');
 
 $(document).ready(function() {
-	console.log('loaded');
+
+	socket.on('vote', function(){
+
+		updateList(function() {
+
+			alert.play();
+
+		});
+
+	});
+
 });

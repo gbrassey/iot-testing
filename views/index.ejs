@@ -21,7 +21,7 @@
 			</nav>
 			<div class="row">
 			  <div class="col-md-12">
-		        <ul>
+		        <ul id="vote-list">
 <% candidates.forEach(function(candidate) { %>
 	                <li id="<%= candidate.name %>"><a href="/http/votes/<%= candidate.name %>"><%= candidate.name %></a>: <span class="count"><%= candidate.votes.length %></span> votes</li>
 <% }); %>

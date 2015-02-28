@@ -14,9 +14,11 @@ router.get('/votes', function(req, res) {
 				return res.status(404).send('No candidates found');
 			} else {
 				var json = candidates.map(function(candidate) {
-					var obj = {};
-					obj[candidate.name] = candidate.getVotes
-					return obj;
+					var item = {
+						name: candidate.name,
+						votes: candidate.getVotes
+					};
+					return item;
 				});
 				return res.status(200).json(json);
 			}
