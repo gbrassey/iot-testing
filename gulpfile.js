@@ -9,7 +9,7 @@ var gulp = require('gulp'),
 	buffer = require('vinyl-buffer');;
 
 var config = {
-	bowerSrc: './bower_components',
+	npmSrc: './node_modules',
 	sassSrc: './src/sass',
 	cssDir: './public/stylesheets',
 	jsSrc: './src/javascripts',
@@ -30,7 +30,7 @@ gulp.task('styles', function() { 
 			})(),
 			includePaths: [
 				'./src/sass',
-				config.bowerSrc + '/bootstrap-sass-official/assets/stylesheets'
+				config.npmSrc + '/bootstrap-sass/assets/stylesheets'
 			]
 		}) )
 		.pipe(gulp.dest(config.cssDir));
@@ -50,7 +50,7 @@ gulp.task('watch-resources', function() {
 	var watchFiles = [
 		config.sassSrc + '/**/*.scss',
 		config.viewSrc + '/**/*.ejs',
-		config.bowerSrc + '/**/*',
+		config.npmSrc + '/**/*',
 		config.jsSrc + '/**/*.js'
 	];
      gulp.watch(watchFiles, ['build']); 
