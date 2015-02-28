@@ -14,8 +14,6 @@ var config = {
 	cssDir: './public/stylesheets',
 	jsSrc: './src/javascripts',
 	jsDir: './public/javascripts',
-	viewSrc: './src/views',
-	viewDir: './views',
 	env: process.env.NODE_ENV || 'development'
 };
 
@@ -50,7 +48,6 @@ gulp.task('scripts', function() {
 gulp.task('watch-resources', function() {
 	var watchFiles = [
 		config.sassSrc + '/**/*.scss',
-		config.viewSrc + '/**/*.ejs',
 		config.npmSrc + '/**/*',
 		config.jsSrc + '/**/*.js'
 	];
